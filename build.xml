@@ -75,14 +75,9 @@
         Which version do you want to install?
 
         1) None, abort installation
-        2) CE 1.5.0.1
-        3) CE 1.5.1.0
-        4) CE 1.6.0.0
-        5) CE 1.6.1.0
-        6) CE 1.6.2.0
-        7) CE 1.7.0.0
+        2) CE 1.9.1.0
         </echo>
-        <input message="Please select magento version to install:" propertyName="mage.install.version" defaultValue="7" />
+        <input message="Please select magento version to install:" propertyName="mage.install.version" defaultValue="2" />
     </target>
 
     <!-- ========================================= -->
@@ -105,56 +100,11 @@
             <then>
                 <fail message="Installation aborted" />
             </then>
-
-            <!-- 2: CE 1.5.0.1 -->
             <elseif>
                 <equals arg1="2" arg2="${mage.install.version}" />
                 <then>
-                    <property name="mage.download.url" value="http://www.magentocommerce.com/downloads/assets/1.5.0.1/magento-1.5.0.1.tar.gz" />                    
-                </then>
-            </elseif>
-
-            <!-- 3: CE 1.5.1.0 -->
-            <elseif>
-                <equals arg1="3" arg2="${mage.install.version}" />
-                <then>
-                    <property name="mage.download.url" value="http://www.magentocommerce.com/downloads/assets/1.5.1.0/magento-1.5.1.0.tar.gz" />
-                </then>
-            </elseif>
-
-            <!-- 4: CE 1.6.0.0 -->
-            <elseif>
-                <equals arg1="4" arg2="${mage.install.version}" />
-                <then>
-                    <property name="mage.download.url" value="http://www.magentocommerce.com/downloads/assets/1.6.0.0/magento-1.6.0.0.tar.gz" />
-                    <property name="mage.sampledata.download.url" value="http://www.magentocommerce.com/downloads/assets/1.6.1.0/magento-sample-data-1.6.1.0.tar.gz" />
-                </then>
-            </elseif>
-
-            <!-- 5: CE 1.6.1.0 -->
-            <elseif>
-                <equals arg1="5" arg2="${mage.install.version}" />
-                <then>
-                    <property name="mage.download.url" value="http://www.magentocommerce.com/downloads/assets/1.6.1.0/magento-1.6.1.0.tar.gz" />
-                    <property name="mage.sampledata.download.url" value="http://www.magentocommerce.com/downloads/assets/1.6.1.0/magento-sample-data-1.6.1.0.tar.gz" />
-                </then>
-            </elseif>
-
-            <!-- 6: CE 1.6.2.0 -->
-            <elseif>
-                <equals arg1="6" arg2="${mage.install.version}" />
-                <then>
-                    <property name="mage.download.url" value="http://www.magentocommerce.com/downloads/assets/1.6.2.0/magento-1.6.2.0.tar.gz" />
-                    <property name="mage.sampledata.download.url" value="http://www.magentocommerce.com/downloads/assets/1.6.1.0/magento-sample-data-1.6.1.0.tar.gz" />
-                </then>
-            </elseif>
-
-            <!-- 7: CE 1.7.0.0 -->
-            <elseif>
-                <equals arg1="7" arg2="${mage.install.version}" />
-                <then>
-                    <property name="mage.download.url" value="http://www.magentocommerce.com/downloads/assets/1.7.0.0/magento-1.7.0.0.tar.gz" />
-                    <property name="mage.sampledata.download.url" value="http://www.magentocommerce.com/downloads/assets/1.7.0.0/magento-1.7.0.0.tar.gz" />
+                    <property name="mage.download.url" value="http://www.magentocommerce.com/downloads/assets/1.9.1.0/magento-1.9.1.0.tar.gz" />
+                    <property name="mage.sampledata.download.url" value="http://www.magentocommerce.com/downloads/assets/1.9.1.0/magento-sample-data-1.9.1.0.tar.gz" />
                 </then>
             </elseif>
 
@@ -178,7 +128,7 @@
         <exec command="${bin.tar} xfz ${mage.download.file}" dir="${mage.download.dir}" />
         <exec command="mv ${mage.download.dir}/magento ${mage.base.dir}/${mage.shopdomain}" />
         <chmod mode="0777" verbose="true">
-            <fileset dir="${mage.base.dir}/${mage.shopdomain}">
+            <fileset dir="${mage.base.dir}">
                 <include name="app/etc" />
                 <include name="var" />
                 <include name="media" />
@@ -232,10 +182,10 @@
                     <!-- Extract sampledata tarball -->
                         <exec command="${bin.tar} xfz ${mage.sampledata.download.file}" dir="${mage.download.dir}" />
 
-                        <exec command="cp -r ${mage.download.dir}/magento-sample-data-1.6.1.0/media/* ${mage.base.dir}/${mage.shopdomain}/media/" />
+                        <exec command="cp -r ${mage.download.dir}/magento-sample-data-1.9.1.0/media/* ${mage.base.dir}/${mage.shopdomain}/media/" />
 
                     <!-- Install demo database values -->
-                        <exec command="${bin.mysql} -h${db.host} -u${db.user} -p${db.pass} ${db.name} &lt; ${mage.download.dir}/magento-sample-data-1.6.1.0/magento_sample_data_for_1.6.1.0.sql" passthru="yes" checkreturn="true" />
+                        <exec command="${bin.mysql} -h${db.host} -u${db.user} -p${db.pass} ${db.name} &lt; ${mage.download.dir}/magento-sample-data-1.9.1.0/magento_sample_data_for_1.9.1.0.sql" passthru="yes" checkreturn="true" />
                     </then>
                 </if>
             </then>
